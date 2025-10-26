@@ -1,0 +1,29 @@
+{
+  "name": "playwright-frontend-selfcare-test",
+  "version": "1.0.0",
+  "description": "Frontend test automation skeleton using Playwright and TypeScript",
+  "private": true,
+  "scripts": {
+    "postinstall": "playwright install --with-deps",
+    "test": "npm run test:ui",
+    "test:ui": "playwright test",
+    "test:ui:headed": "playwright test --headed",
+    "test:ui:debug": "playwright test --debug",
+    "test:api": "playwright test tests/api",
+    "lint": "eslint . --ext .ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.43.0",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "typescript": "5.5.4"
+  }
+}
