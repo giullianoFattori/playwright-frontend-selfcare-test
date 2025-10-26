@@ -100,4 +100,6 @@ If this template saved you time, consider buying me a coffee:
 
 - Direct link: https://wise.com/pay/me/giullianof9
 
-![Buy me a coffee QR code](docs/coffee-qr.png)
+<a href="https://wise.com/pay/me/giullianof9">
+  <img src="docs/coffee-qr.png?raw=true" alt="Buy me a coffee QR code" width="180" />
+</a>
