@@ -1,62 +1,103 @@
 # Playwright Frontend Test Automation Skeleton
 
-Este projeto fornece um esqueleto completo para automação de testes frontend utilizando [Playwright](https://playwright.dev/) com TypeScript. Ele segue o modelo de Page Object, inclui exemplos de testes de UI e API, aplica padrões de clean code e já vem preparado para execução local, geração de relatórios e integração contínua no GitHub Actions.
+This project provides a full starter kit for frontend test automation powered by [Playwright](https://playwright.dev/) and TypeScript. It follows the Page Object Model, ships with UI and API samples, applies clean code practices, and is ready for local execution, reporting, and GitHub Actions integration.
 
-## Requisitos
+## Requirements
 
-- Node.js 18+ (recomendado 20)
+- Node.js 18+ (20 recommended)
 - npm 9+
 
-## Instalação
+## Installation
 
 ```bash
 npm install
 ```
 
-O script `postinstall` instala automaticamente os navegadores necessários do Playwright.
+The `postinstall` script automatically installs the browsers required by Playwright.
 
-## Scripts Disponíveis
+## Available Scripts
 
-- `npm run test:ui` – Executa todos os testes Playwright em modo headless.
-- `npm run test:ui:headed` – Executa os testes com interface gráfica.
-- `npm run test:ui:debug` – Executa os testes em modo de depuração.
-- `npm run test:api` – Executa apenas os testes localizados em `tests/api`.
-- `npm run lint` – Verifica o padrão de código com ESLint.
+- `npm run test:ui` – Run every Playwright UI test in headless mode.
+- `npm run test:ui:headed` – Run UI tests with a visible browser.
+- `npm run test:ui:debug` – Run UI tests with the debug inspector.
+- `npm run test:api` – Run only the API specs inside `tests/api`.
+- `npm run lint` – Check the codebase with ESLint.
 
-## Estrutura de Pastas
+## Folder Structure
 
 ```
-├── tests
-│   ├── api
-│   │   ├── clients        # Clientes para consumo de APIs
-│   │   ├── specs          # Exemplos de testes de API
-│   │   └── utils          # Assertivas e utilitários específicos de API
-│   ├── shared             # Configurações compartilhadas (ex.: variáveis de ambiente)
-│   └── ui
-│       ├── fixtures       # Fixtures reutilizáveis do Playwright
-│       ├── pages          # Page Objects seguindo POM
-│       ├── specs          # Especificações de testes de UI
-│       └── utils          # Funções utilitárias para testes de UI
+tests/
+  api/
+    clients/    # API clients
+    specs/      # API test specs
+    utils/      # Assertions and API helpers
+  shared/       # Shared configuration (env validation, constants, etc.)
+  ui/
+    fixtures/   # Reusable Playwright fixtures
+    pages/      # Page Objects following POM
+    specs/      # UI test specs
+    utils/      # UI helpers and assertions
 ```
 
-## Relatórios
+## Reports
 
-Após a execução, os relatórios são gerados automaticamente:
+After each run the following reports are generated automatically:
 
-- `playwright-report/` – Relatório HTML interativo do Playwright.
-- `reports/results.xml` – Relatório JUnit para integrações.
-- `artifacts/` – Screenshots e vídeos quando habilitados.
+- `playwright-report/` – Interactive Playwright HTML report.
+- `reports/results.xml` – JUnit report for CI integrations.
+- `artifacts/` – Screenshots and videos when enabled.
 
-## Integração Contínua
+## Continuous Integration
 
-O workflow `.github/workflows/playwright.yml` executa lint, testes e publica relatórios automaticamente a cada push/pull request na branch `main`.
+The workflow at `.github/workflows/playwright.yml` runs linting, tests, and publishes artifacts on every push or pull request targeting `main`.
 
-## Convenções de Código
+## Code Conventions
 
-- Page Objects centralizam interações com a UI.
-- Utilitários fornecem métodos facilitadores e reutilizáveis.
-- ESLint (com regras do TypeScript) garante padronização e qualidade de código.
+- Page Objects encapsulate UI interactions.
+- Shared helpers avoid duplicated logic across specs.
+- ESLint (with TypeScript rules) enforces code style and quality.
 
-## Variáveis de Ambiente
+## Environment Variables
 
-Configure a variável `BASE_URL` caso queira sobrescrever o `baseURL` padrão (`https://playwright.dev`). As variáveis são validadas pelo schema definido em `tests/shared/environment.ts`.
+Set `BASE_URL` if you need to override the default `https://playwright.dev`. Variables are validated by the schema in `tests/shared/environment.ts`.
+
+## Quick Usage Example
+
+The command below runs only the UI specs tagged `@smoke`, shows the browser, and opens the Playwright trace viewer at the end:
+
+```bash
+npm run test:ui:headed -- --grep @smoke --trace on
+```
+
+If you are getting started locally, try the sample home page test:
+
+```bash
+npm run test:ui -- tests/ui/specs/home.spec.ts
+```
+
+Playwright will generate the HTML report in `playwright-report/index.html` as soon as the run finishes.
+
+## Creating a New Test
+
+1. Create a new spec file under `tests/ui/specs` (for UI) or `tests/api/specs` (for API). Use a descriptive file name such as `user-profile.spec.ts`.
+2. Import the shared fixtures and Page Objects you need:
+   ```ts
+   import { test, expect } from '@playwright/test';
+   import { HomePage } from '../pages/home.page';
+   ```
+3. Arrange test data inside `test.beforeEach` when it is reusable, and instantiate Page Objects inside the test body.
+4. Write focused assertions that verify one behavior per test. Tag scenarios with `@smoke`, `@regression`, etc. so you can filter with `--grep`.
+5. Run your new test with one of the npm scripts, for example:
+   ```bash
+   npm run test:ui -- tests/ui/specs/user-profile.spec.ts
+   ```
+
+For API tests follow the same steps using the API clients available in `tests/api/clients`.
+
+## Support the Project
+
+If this template saved you time, consider buying me a coffee:
+
+- Direct link: https://wise.com/pay/me/giullianof9
+
+![Buy me a coffee QR code](docs/coffee-qr.png)
